@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primary_moviewer_1">#FF25309B</color>
+    <color name="primary_moviewer_2">#FFDBDFFD</color>
+    <color name="background_page">#FFF1F1F1</color>
+    <color name="logout_color">#FFC14444</color>
+    <color name="primary_moviewer_3">#FF6570D4</color>
 </resources>

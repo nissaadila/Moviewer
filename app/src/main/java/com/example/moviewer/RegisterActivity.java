@@ -28,10 +28,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         init();
 
-//        tvLogin.setOnClickListener(v -> {
-//            Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-//            startActivity(i);
-//        });
+        tvLogin.setOnClickListener(v -> {
+            Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(i);
+        });
 
         btnRegister.setOnClickListener(v -> {
             validate();
@@ -60,10 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(this, "user is taken", Toast.LENGTH_SHORT).show();
             }
         }
-
-
-
-
     }
 
     private void init(){

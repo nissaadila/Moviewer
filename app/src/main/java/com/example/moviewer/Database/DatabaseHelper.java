@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private final String CREATE_TABLE_USERS = "CREATE TABLE users(id integer PRIMARY KEY AUTOINCREMENT," +

@@ -55,10 +55,10 @@ public class UserHelper {
     }
 
     // auth -> read
-    public User auth(String username, String password){
+    public User auth(String email, String password){
         db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE username = ? and password = ?",
-                new String[]{username, password});
+        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE email = ? and password = ?",
+                new String[]{email, password});
 
         User user = null;
         if(cursor != null && cursor.getCount() > 0){

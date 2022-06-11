@@ -1,6 +1,7 @@
 package com.example.moviewer;
 
 public class Movie {
+    int id;
     String title;
     String overview;
     String path;
@@ -13,6 +14,10 @@ public class Movie {
         this.path = path;
         this.rating = rating;
         this.releaseDate = releaseDate;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getTitle() {

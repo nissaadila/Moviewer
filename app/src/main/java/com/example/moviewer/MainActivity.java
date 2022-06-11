@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
     public void init() {
         SharedPreferences sPref = getSharedPreferences("LOGGED_IN", MODE_PRIVATE);
-        user_id_logged = sPref.getInt("ID", -1);
+//        user_id_logged = sPref.getInt("ID", -1);
         switchFragment(new HomeFragment());
         bottomNav = findViewById(R.id.bottomNav);
     }

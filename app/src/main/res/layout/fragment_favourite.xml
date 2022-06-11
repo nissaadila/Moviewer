@@ -5,10 +5,26 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.FavouriteFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/errorMessageFavourite"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"
+            android:text="No Result to Show"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movieFavourite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"></androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
 
 </FrameLayout>

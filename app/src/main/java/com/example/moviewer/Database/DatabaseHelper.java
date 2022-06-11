@@ -12,6 +12,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                                                 "password text NOT NULL," +
                                                 "email text NOT NULL)";
 
+    private final String CREATE_TABLE_FAVOURITE = "CREATE TABLE favourite(id integer PRIMARY KEY AUTOINCREMENT," +
+                                                    "title text NOT NULL," +
+                                                    "overview text NOT NULL," +
+                                                    "path text NOT NULL," +
+                                                    "rating text NOT NULL," +
+                                                    "releaseDate text NOT NULL)";
+
     public DatabaseHelper(@Nullable Context context) {
         super(context, "sqlite", null, 1);
     }
@@ -19,10 +26,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_TABLE_USERS);
+        sqLiteDatabase.execSQL(CREATE_TABLE_FAVOURITE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS users");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS favourite");
+        onCreate(sqLiteDatabase);
     }
 }

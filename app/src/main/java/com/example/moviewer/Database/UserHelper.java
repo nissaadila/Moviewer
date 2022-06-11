@@ -20,7 +20,11 @@ public class UserHelper {
     //get
     public Cursor getUserData(){
         db = dbHelper.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM users", null);
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery("SELECT * FROM users", null);
+        }
+        return cursor;
     }
 
     // insert

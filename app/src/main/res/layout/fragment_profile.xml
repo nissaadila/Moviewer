@@ -11,7 +11,7 @@
         android:orientation="vertical"
         tools:context=".Profile">
     <RelativeLayout
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,6 +51,7 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:text="Edit"
+            android:layout_marginLeft="5dp"
             android:id="@+id/BtnEditUsername"/>
         <EditText
             android:layout_width="200dp"
@@ -62,7 +63,8 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:visibility="gone"
-            android:text="Save Change"
+            android:layout_marginLeft="5dp"
+            android:text="Save"
             android:id="@+id/BtnUsernameSave"/>
 
     </LinearLayout>
@@ -83,6 +85,7 @@
         <Button
             android:layout_width="100dp"
             android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
             android:text="Edit"
             android:id="@+id/BtnEditEmail"/>
         <EditText
@@ -92,9 +95,11 @@
             android:visibility="gone"
             android:id="@+id/EditTextEmail"/>
         <Button
+            android:layout_marginLeft="5dp"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:visibility="gone"
+            android:text="Save"
             android:id="@+id/BtnEmailSave"/>
 
     </LinearLayout>
@@ -104,7 +109,7 @@
         android:id="@+id/BtnLogOut"
         android:backgroundTint="@color/logout_color"
         android:layout_gravity="center"
-        android:layout_width="300dp"
+        android:layout_width="305dp"
         android:layout_height="50dp"
         android:text="Log out"/>
 

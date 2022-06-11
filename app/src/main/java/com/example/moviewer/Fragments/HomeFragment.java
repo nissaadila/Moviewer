@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             keyword = searchBar.getText().toString();
             Log.v("test", keyword);
             searchData(keyword);
-            Toast.makeText(getActivity(), "Searching for" + keyword, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Searching for " + keyword, Toast.LENGTH_SHORT).show();
         }else if(view == searchBtn && searchBar.toString()==null){
             Toast.makeText(getActivity(), "Please Input Keyword", Toast.LENGTH_SHORT).show();
         }
@@ -103,6 +103,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         movieAdapt.notifyDataSetChanged();
                         if(movies.size()>0){
                             errorMsg.setVisibility(View.GONE);
+                        }else if(movies.size()==0){
+                            errorMsg.setVisibility(View.VISIBLE);
                         }
 
                         for (Movie e: movies) {

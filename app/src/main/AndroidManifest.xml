@@ -3,6 +3,8 @@
     package="com.example.moviewer">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -12,8 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moviewer">
         <activity
+            android:name=".Profile"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,15 +31,10 @@
             android:label="@string/title_activity_home" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
-         <activity
+            android:exported="true"></activity>
+        <activity
             android:name=".LoginActivity"
-            android:exported="true">
-
-        </activity>
-
-      
+            android:exported="true"></activity>
     </application>
 
 </manifest>

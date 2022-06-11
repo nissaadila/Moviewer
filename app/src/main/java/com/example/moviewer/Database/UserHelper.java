@@ -74,6 +74,32 @@ public class UserHelper {
         return user;
     }
 
+    public Integer findId(String email, String name, String password) {
+        Integer id = 0;
+        String query = "SELECT * FROM Users";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        String tempName;
+        String tempEmail;
+        String tempPassword;
+
+        if (cursor.getCount() > 0){
+            do {
+                tempEmail = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+                tempName = cursor.getString(cursor.getColumnIndexOrThrow("username"));
+                tempPassword = cursor.getString(cursor.getColumnIndexOrThrow("password"));
+                if (tempEmail.equals(email) && tempName.equals(name) && tempPassword.equals(password)){
+                    id=cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                }
+                cursor.moveToNext();
+            } while (!cursor.isAfterLast());
+        }
+
+        cursor.close();
+        return id;
+    }
+
     public void update(User user){
         db = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -88,4 +114,12 @@ public class UserHelper {
         db.delete(TABLE_NAME, "id = ?", new String[]{user.getId() + ""});
         db.close();
     }
+
+//    public void insertPic(byte img[]){
+//        db = dbHelper.getWritableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put("image", img);
+//        db.insert(TABLE_NAME, null, contentValues);
+//        db.close();
+//    }
 }

@@ -10,7 +10,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private final String CREATE_TABLE_USERS = "CREATE TABLE users(id integer PRIMARY KEY AUTOINCREMENT," +
                                                 "username text NOT NULL," +
                                                 "password text NOT NULL," +
-                                                "email text NOT NULL)";
+                                                "email text NOT NULL," + "image blob)";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, "sqlite", null, 1);

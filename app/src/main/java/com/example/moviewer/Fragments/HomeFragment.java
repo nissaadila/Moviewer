@@ -3,64 +3,120 @@ package com.example.moviewer.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.moviewer.Movie;
+import com.example.moviewer.MovieAdapter;
 import com.example.moviewer.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class HomeFragment extends Fragment {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.util.Vector;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class HomeFragment extends Fragment implements View.OnClickListener{
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
+    TextView searchBar, errorMsg;
+    Button searchBtn;
+    String keyword;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    String title, rating, overview, path, published_date;
+    RecyclerView mrv;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    Vector<Movie> movies = new Vector<>();
+    MovieAdapter movieAdapt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        searchBar = view.findViewById(R.id.search_bar);
+        searchBtn = view.findViewById(R.id.searchButton);
+        searchBtn.setOnClickListener(this);
+        errorMsg = view.findViewById(R.id.errorMessage);
+        mrv = view.findViewById(R.id.movieView);
+
+        movieAdapt = new MovieAdapter(getContext());
+        movieAdapt.setMovies(movies);
+        mrv.setAdapter(movieAdapt);
+        mrv.setLayoutManager(new LinearLayoutManager(getContext()));
+        return view;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == searchBtn && searchBar.toString()!=null){
+            keyword = searchBar.getText().toString();
+            Log.v("test", keyword);
+            searchData(keyword);
+            Toast.makeText(getActivity(), "Searching for" + keyword, Toast.LENGTH_SHORT).show();
+        }else if(view == searchBtn && searchBar.toString()==null){
+            Toast.makeText(getActivity(), "Please Input Keyword", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void searchData(String keyword){
+        movies.clear();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        final String api_key = "6cb3ffbaf1d68d170e4b832518a115c5";
+        final String url = "https://api.themoviedb.org/3/search/movie?api_key=" + api_key + "&query=" + keyword;
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                response -> {
+                    try {
+                        JSONArray array = response.getJSONArray("results");
+                        for(int i=0; i<array.length(); i++){
+                            JSONObject object = array.getJSONObject(i);
+
+                            title = object.getString("original_title");
+                            rating = object.getString("vote_average");
+                            overview = object.getString("overview");
+                            path = "https://image.tmdb.org/t/p/w500" + object.getString("poster_path");
+                            published_date = object.getString("release_date");
+
+                            Movie movie = new Movie(title, overview, path, rating, published_date);
+                            movies.add(movie);
+                        }
+                        movieAdapt.notifyDataSetChanged();
+                        if(movies.size()>0){
+                            errorMsg.setVisibility(View.GONE);
+                        }
+
+                        for (Movie e: movies) {
+                            Log.v("success", e.getPath());
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+                    Log.v("error", error.toString());
+                }
+        );
+        requestQueue.add(request);
+    }
+
 }

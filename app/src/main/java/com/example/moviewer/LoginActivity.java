@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
         User validasiuser = userHelper.auth(emailText,passwordText);
         if (validasiuser != null){
-            Intent move = new Intent(LoginActivity.this, Home.class);
+            Intent move = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(move);
             Toast.makeText(this,"Success Login",Toast.LENGTH_LONG).show();
         }

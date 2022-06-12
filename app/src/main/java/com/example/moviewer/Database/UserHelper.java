@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.moviewer.Models.User;
 
@@ -76,6 +77,94 @@ public class UserHelper {
         }
         db.close();
         return user;
+    }
+
+    public int findID(String username, String email, String password) {
+        int id = 0;
+        String query = "SELECT * FROM users";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        String tempUsername, tempEmail, tempPassword;
+        int tempId;
+
+        if (cursor.getCount() > 0){
+            do {
+                tempId=cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                tempUsername = cursor.getString(cursor.getColumnIndexOrThrow("username"));
+                tempPassword=cursor.getString(cursor.getColumnIndexOrThrow("password"));
+                tempEmail =cursor.getString(cursor.getColumnIndexOrThrow("email"));
+                if (tempUsername.equals(username) && tempEmail.equals(email) && tempPassword.equals(password)){
+                    id = tempId;
+                }
+                cursor.moveToNext();
+            } while (!cursor.isAfterLast());
+        }
+
+        cursor.close();
+        return id;
+    }
+
+    public int checkEmail(String email) {
+        int flag = 0;
+        String query = "SELECT * FROM users";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        String tempEmail;
+
+        if (cursor.getCount() > 0){
+            do {
+                tempEmail = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+                if (tempEmail.equals(email)){
+                    flag = 1;
+                }
+                cursor.moveToNext();
+            } while (!cursor.isAfterLast());
+        }
+        cursor.close();
+        return flag;
+    }
+
+    public User findUser(String email, String password) {
+        User curr_user = null;
+        String query = "SELECT * FROM users";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        String tempUsername, tempEmail, tempPassword;
+
+        if (cursor.getCount() > 0){
+            do {
+                tempEmail = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+                tempPassword = cursor.getString(cursor.getColumnIndexOrThrow("password"));
+                if (tempEmail.equals(email) && tempPassword.equals(password)){
+                    tempUsername = cursor.getString(cursor.getColumnIndexOrThrow("username"));
+                    curr_user = new User(tempUsername, tempPassword, tempEmail);
+                }
+                cursor.moveToNext();
+            } while (!cursor.isAfterLast());
+        }
+        cursor.close();
+        return curr_user;
+    }
+
+    public void updateUsername(int id, String username){
+        String query = "UPDATE users SET username = '" + username + "' WHERE id = " + id;
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null){
+            db.execSQL(query);
+        }
+    }
+
+    public void updateEmail(int id, String email){
+        String query = "UPDATE users SET email = '" + email + "' WHERE id = " + id;
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null){
+            db.execSQL(query);
+        }
     }
 
     public void update(User user){

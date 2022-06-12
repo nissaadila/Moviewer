@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.moviewer.Database.UserHelper;
 import com.example.moviewer.LoginActivity;
@@ -37,13 +38,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     TextView username, email;
     ImageView profile;
 
-//    UserHelper userHelper;
-//    User user;
+    UserHelper uh;
+    User curr_user;
+    int curr_id=-1;
 
     Bitmap bitmap = null;
     byte image[];
 
     String curr_email, curr_password, curr_username;
+    String new_email, new_username;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,8 +77,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         curr_password = sp.getString("password", "");
         curr_username = sp.getString("username", "");
 
-        username.setText(curr_username);
-        email.setText(curr_password);
+ //       curr_id = uh.findID(curr_username, curr_email, curr_password);
+        Log.v("currid", "id: " + curr_id);
+//        curr_user = uh.findUser(curr_email, curr_password);
+//
+//        username.setText(curr_user.getUsername());
+//        email.setText(curr_user.getEmail());
 
         return view;
     }
@@ -92,6 +99,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             saveUsername.setVisibility(View.GONE);
             editUsername.setVisibility(View.VISIBLE);
             username.setVisibility(View.VISIBLE);
+
+            if(editTextUsername.getText().toString().isEmpty()){
+                Toast.makeText(getContext(), "Username cannot be empty!", Toast.LENGTH_SHORT).show();
+            }else{
+                new_username = editTextUsername.getText().toString();
+                uh.updateUsername(curr_id, new_username);
+            }
         } else if (view == editEmail) {
             editTextEmail.setVisibility(View.VISIBLE);
             saveEmail.setVisibility(View.VISIBLE);
@@ -102,6 +116,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             saveEmail.setVisibility(View.GONE);
             editEmail.setVisibility(View.VISIBLE);
             email.setVisibility(View.VISIBLE);
+
+            if(editTextEmail.getText().toString().isEmpty()){
+                Toast.makeText(getContext(), "Email cannot be empty!", Toast.LENGTH_SHORT).show();
+            }else{
+                //check email udah ada belom
+                new_email = editTextEmail.getText().toString();
+                if(uh.checkEmail(new_email)==1){
+                    Toast.makeText(getContext(), "Email already exist!", Toast.LENGTH_SHORT).show();
+                }else{
+                    uh.updateUsername(curr_id, new_email);
+                }
+            }
         } else if (view == logOut) {
             Intent i = new Intent(getActivity(), LoginActivity.class);
             startActivity(i);

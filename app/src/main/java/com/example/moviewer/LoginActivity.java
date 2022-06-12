@@ -3,6 +3,7 @@ package com.example.moviewer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     Button bLogin;
     TextView tvRegistNow;
     UserHelper userHelper;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +37,19 @@ public class LoginActivity extends AppCompatActivity {
     private void validasi(){
         String emailText = email.getText().toString();
         String passwordText = password.getText().toString();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
 
         User validasiuser = userHelper.auth(emailText,passwordText);
         if (validasiuser != null){
+            editor.putString("email",emailText);
+            editor.putString("password",passwordText);
+            editor.apply();
+            Toast.makeText(this,"Success Login",Toast.LENGTH_LONG).show();
             Intent move = new Intent(LoginActivity.this, MainActivity.class);
             move.putExtra("user", validasiuser);
             startActivity(move);
-            Toast.makeText(this,"Success Login",Toast.LENGTH_LONG).show();
+            finish();
         }
         else{
             Toast.makeText(this, "User not found",Toast.LENGTH_LONG).show();
@@ -55,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         bLogin = findViewById(R.id.buttonLogin);
         tvRegistNow = findViewById(R.id.textViewRegisterNow);
         userHelper = new UserHelper(this);
+        sharedPreferences = getSharedPreferences("SHARED_PREF",MODE_PRIVATE);
     }
 
 

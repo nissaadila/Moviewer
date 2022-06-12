@@ -11,7 +11,7 @@
         android:orientation="vertical"
         tools:context=".Profile">
     <RelativeLayout
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,43 +32,65 @@
             />
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textSize="25dp"
+            android:layout_marginLeft="55dp"
+            android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:textSize="20dp"
+                android:text="Username"
+                android:id="@+id/TextUsername"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="Edit"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/BtnEditUsername"/>
+            <EditText
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:hint="Edit Username"
+                android:visibility="gone"
+                android:id="@+id/EditTextUsername"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:visibility="gone"
+                android:layout_marginLeft="5dp"
+                android:text="Save"
+                android:id="@+id/BtnUsernameSave"/>
+
+        </LinearLayout>
+    </LinearLayout>
 
 
     <LinearLayout
-        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
+        android:orientation="vertical">
         <TextView
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:textSize="20dp"
-            android:text="Username"
-            android:id="@+id/TextUsername"/>
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="Edit"
-            android:layout_marginLeft="5dp"
-            android:id="@+id/BtnEditUsername"/>
-        <EditText
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:hint="Edit Username"
-            android:visibility="gone"
-            android:id="@+id/EditTextUsername"/>
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:visibility="gone"
-            android:layout_marginLeft="5dp"
-            android:text="Save"
-            android:id="@+id/BtnUsernameSave"/>
-
-    </LinearLayout>
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="25dp"
+            android:layout_marginLeft="55dp"
+            android:textStyle="bold"/>
     <LinearLayout
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
@@ -103,9 +125,10 @@
             android:id="@+id/BtnEmailSave"/>
 
     </LinearLayout>
+    </LinearLayout>
 
     <Button
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:id="@+id/BtnLogOut"
         android:backgroundTint="@color/logout_color"
         android:layout_gravity="center"

@@ -2,7 +2,9 @@ package com.example.moviewer.Fragments;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +21,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.moviewer.Database.UserHelper;
 import com.example.moviewer.LoginActivity;
+import com.example.moviewer.Models.User;
 import com.example.moviewer.R;
 
 import java.io.ByteArrayOutputStream;
@@ -33,8 +37,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     TextView username, email;
     ImageView profile;
 
+//    UserHelper userHelper;
+//    User user;
+
     Bitmap bitmap = null;
     byte image[];
+
+    String curr_email, curr_password, curr_username;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,6 +67,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         saveUsername.setOnClickListener(this);
         editPhoto.setOnClickListener(this);
         logOut.setOnClickListener(this);
+
+
+        SharedPreferences sp = getContext().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE);
+        curr_email = sp.getString("email", "");
+        curr_password = sp.getString("password", "");
+        curr_username = sp.getString("username", "");
+
+        username.setText(curr_username);
+        email.setText(curr_password);
+
         return view;
     }
 

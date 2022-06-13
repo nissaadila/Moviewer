@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         bLogin = findViewById(R.id.buttonLogin);
         tvRegistNow = findViewById(R.id.textViewRegisterNow);
         userHelper = new UserHelper(this);
-        sharedPreferences = getSharedPreferences("SHARED_PREF",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("LOG_IN",MODE_PRIVATE);
     }
 
 

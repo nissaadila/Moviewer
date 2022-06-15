@@ -21,7 +21,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
     private BottomNavigationView bottomNav;
-    private int user_id_logged;
+    int user_id_logged;
 
 
     @Override
@@ -41,8 +41,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     }
 
     public void init() {
-        SharedPreferences sPref = getSharedPreferences("LOGGED_IN", MODE_PRIVATE);
-//        user_id_logged = sPref.getInt("ID", -1);
+        SharedPreferences sPref = getSharedPreferences("LOG_IN", MODE_PRIVATE);
+        user_id_logged = sPref.getInt("id", -1);
+        android.util.Log.wtf("id", String.valueOf(user_id_logged));
         switchFragment(new HomeFragment());
         bottomNav = findViewById(R.id.bottomNav);
     }
@@ -54,7 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         } else if(item.getItemId() == R.id.nav_favourite) {
             switchFragment(new FavouriteFragment());
         } else if(item.getItemId() == R.id.nav_profile){
-            switchFragment(new ProfileFragment());
+            android.util.Log.wtf("id", String.valueOf(user_id_logged));
+            switchFragment(new ProfileFragment(user_id_logged));
         }
         return true;
     }

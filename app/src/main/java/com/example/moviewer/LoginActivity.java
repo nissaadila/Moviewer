@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.database.Cursor;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView tvRegistNow;
     UserHelper userHelper;
     SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
 
         User validasiuser = userHelper.auth(emailText,passwordText);
         if (validasiuser != null){
+            editor.putInt("id", validasiuser.getId());
+//            android.util.Log.wtf("id", String.valueOf(validasiuser.getId()));
             editor.putString("email",emailText);
             editor.putString("password",passwordText);
             editor.putString("username", validasiuser.getUsername());

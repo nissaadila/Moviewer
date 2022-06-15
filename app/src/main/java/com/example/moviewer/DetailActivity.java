@@ -52,17 +52,17 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         if(intent != null){
             movie_id = intent.getLongExtra("position",0);
-            Cursor cursor = favouriteHelper.getFavouriterData(movie_id);
-            cursor.moveToFirst();
-
-            judulFilm.setText(cursor.getString(1));
-            detailSynopsis.setText(cursor.getString(2));
-
-            ratingFilm.setText(cursor.getString(4));
-            releaseDate.setText(cursor.getString(5));
-
-            cursor.close();
-            sharedPreferences = getSharedPreferences("LOG_IN",MODE_PRIVATE);
+//            Cursor cursor = favouriteHelper.getFavouriterData(movie_id);
+//            cursor.moveToFirst();
+//
+//            judulFilm.setText(cursor.getString(1));
+//            detailSynopsis.setText(cursor.getString(2));
+//
+//            ratingFilm.setText(cursor.getString(4));
+//            releaseDate.setText(cursor.getString(5));
+//
+//            cursor.close();
+//            sharedPreferences = getSharedPreferences("LOG_IN",MODE_PRIVATE);
 
 
 
@@ -85,7 +85,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         String rating = ratingFilm.getText().toString();
         String tanggalRealease = releaseDate.getText().toString();
 
-       // Movie movie = new Movie(judul,deskripsi,,rating,tanggalRealease);
+        // Movie movie = new Movie(judul,deskripsi,,rating,tanggalRealease);
         //favouriteHelper.insertFavourite(movie);
     }
 }

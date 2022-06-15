@@ -28,6 +28,24 @@ public class UserHelper {
         return cursor;
     }
 
+    public User getUserData(int idx) {
+        db = dbHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE id = " + idx, null);
+
+        User user = null;
+        if(cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+            user = new User();
+            user.setId(cursor.getInt(0));
+            user.setUsername(cursor.getString(1));
+            user.setPassword(cursor.getString(2));
+            user.setEmail(cursor.getString(3));
+            cursor.close();
+        }
+        db.close();
+        return user;
+    }
+
     // insert
     public void insert(User user){
         db = dbHelper.getWritableDatabase();
@@ -79,51 +97,23 @@ public class UserHelper {
         return user;
     }
 
-    public int findID(String username, String email, String password) {
-        int id = 0;
-        String query = "SELECT * FROM users";
-        Cursor cursor = db.rawQuery(query, null);
-        cursor.moveToFirst();
+    public User checkEmail(String email) {
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE email = ?",
+                new String[]{email});
 
-        String tempUsername, tempEmail, tempPassword;
-        int tempId;
-
-        if (cursor.getCount() > 0){
-            do {
-                tempId=cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-                tempUsername = cursor.getString(cursor.getColumnIndexOrThrow("username"));
-                tempPassword=cursor.getString(cursor.getColumnIndexOrThrow("password"));
-                tempEmail =cursor.getString(cursor.getColumnIndexOrThrow("email"));
-                if (tempUsername.equals(username) && tempEmail.equals(email) && tempPassword.equals(password)){
-                    id = tempId;
-                }
-                cursor.moveToNext();
-            } while (!cursor.isAfterLast());
+        User user = null;
+        if(cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+            user = new User();
+            user.setId(cursor.getInt(0));
+            user.setUsername(cursor.getString(1));
+            user.setPassword(cursor.getString(2));
+            user.setEmail(cursor.getString(3));
+            cursor.close();
         }
-
-        cursor.close();
-        return id;
-    }
-
-    public int checkEmail(String email) {
-        int flag = 0;
-        String query = "SELECT * FROM users";
-        Cursor cursor = db.rawQuery(query, null);
-        cursor.moveToFirst();
-
-        String tempEmail;
-
-        if (cursor.getCount() > 0){
-            do {
-                tempEmail = cursor.getString(cursor.getColumnIndexOrThrow("email"));
-                if (tempEmail.equals(email)){
-                    flag = 1;
-                }
-                cursor.moveToNext();
-            } while (!cursor.isAfterLast());
-        }
-        cursor.close();
-        return flag;
+        db.close();
+        return user;
     }
 
     public User findUser(String email, String password) {
@@ -149,31 +139,30 @@ public class UserHelper {
         return curr_user;
     }
 
-    public void updateUsername(int id, String username){
-        String query = "UPDATE users SET username = '" + username + "' WHERE id = " + id;
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null){
-            db.execSQL(query);
-        }
-    }
-
-    public void updateEmail(int id, String email){
-        String query = "UPDATE users SET email = '" + email + "' WHERE id = " + id;
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null){
-            db.execSQL(query);
-        }
-    }
-
-    public void update(User user){
+    public boolean updateUsername(int id, String newUsername){
         db = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("username", user.getUsername());
-        contentValues.put("email", user.getEmail());
-        db.update(TABLE_NAME, contentValues, "id = ?", new String[]{user.getId() + ""});
-        db.close();
+        contentValues.put("username", newUsername);
+
+        int update = db.update("users", contentValues, "id = ?", new String[] {String.valueOf(id)});
+
+        if(update == 0)
+            return false;
+        else
+            return true;
+    }
+
+    public boolean updateEmail(int id, String newEmail){
+        db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("email", newEmail);
+
+        int update = db.update("users", contentValues, "id = ?", new String[] {String.valueOf(id)});
+
+        if(update == 0)
+            return false;
+        else
+            return true;
     }
 
     public void delete(User user){

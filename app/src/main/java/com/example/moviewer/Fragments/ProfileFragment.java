@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.database.Cursor;
 
 import androidx.fragment.app.Fragment;
 
@@ -40,13 +41,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     UserHelper uh;
     User curr_user;
-    int curr_id=-1;
+    private final int curr_id;
 
     Bitmap bitmap = null;
     byte image[];
 
     String curr_email, curr_password, curr_username;
     String new_email, new_username;
+
+    public ProfileFragment(int user_id_logged) {
+        this.curr_id = user_id_logged;
+        Log.wtf("currid", "id: " + curr_id);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,19 +76,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         saveUsername.setOnClickListener(this);
         editPhoto.setOnClickListener(this);
         logOut.setOnClickListener(this);
+        uh = new UserHelper(getActivity());
+        curr_user = uh.getUserData(curr_id);
 
+        curr_email = curr_user.getEmail();
+        curr_password = curr_user.getPassword();
+        curr_username = curr_user.getUsername();
+        Log.wtf("curr_user", curr_email + " " + curr_password + " " + curr_username);
 
-        SharedPreferences sp = getContext().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE);
-        curr_email = sp.getString("email", "");
-        curr_password = sp.getString("password", "");
-        curr_username = sp.getString("username", "");
-
- //       curr_id = uh.findID(curr_username, curr_email, curr_password);
-        Log.v("currid", "id: " + curr_id);
-//        curr_user = uh.findUser(curr_email, curr_password);
-//
-//        username.setText(curr_user.getUsername());
-//        email.setText(curr_user.getEmail());
+//        Log.v("currid", "id: " + user_id_logged);
+        username.setText(curr_user.getUsername());
+        email.setText(curr_user.getEmail());
 
         return view;
     }
@@ -104,7 +108,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(getContext(), "Username cannot be empty!", Toast.LENGTH_SHORT).show();
             }else{
                 new_username = editTextUsername.getText().toString();
-                uh.updateUsername(curr_id, new_username);
+                boolean uniqueCheck = uh.updateUsername(curr_id, new_username);
+                if(!uniqueCheck) {
+                    Toast.makeText(getActivity(), "Failed to Update, Username must be Unique", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Data Update Successful", Toast.LENGTH_SHORT).show();
+                    username.setText(new_username);
+                }
             }
         } else if (view == editEmail) {
             editTextEmail.setVisibility(View.VISIBLE);
@@ -122,10 +132,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }else{
                 //check email udah ada belom
                 new_email = editTextEmail.getText().toString();
-                if(uh.checkEmail(new_email)==1){
+                User validateEmail = uh.checkEmail(new_email);
+                if(validateEmail != null){
                     Toast.makeText(getContext(), "Email already exist!", Toast.LENGTH_SHORT).show();
                 }else{
-                    uh.updateUsername(curr_id, new_email);
+                    boolean uniqueCheck = uh.updateEmail(curr_id, new_email);
+                    if(!uniqueCheck) {
+                        Toast.makeText(getActivity(), "Failed to Update, Email must be Unique", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Data Update Successful", Toast.LENGTH_SHORT).show();
+                        email.setText(new_email);
+                    }
                 }
             }
         } else if (view == logOut) {

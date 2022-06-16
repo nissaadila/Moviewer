@@ -75,7 +75,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         public void onClick(View view) {
             //pindah ke detail movie
             Log.d("testClick", "hai");
-            Intent i = new Intent(view.getContext(), DetailMovieActivity.class);
+            Intent i = new Intent(view.getContext(), DetailActivity.class);
             i.putExtra("title", title.getText().toString());
             i.putExtra("rating", rating.getText().toString());
             i.putExtra("overview", overview.getText().toString());

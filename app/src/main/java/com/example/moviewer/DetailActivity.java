@@ -18,76 +18,59 @@ import com.bumptech.glide.Glide;
 import com.example.moviewer.Database.DatabaseHelper;
 import com.example.moviewer.Database.FavouriteHelper;
 import com.example.moviewer.Database.UserHelper;
+import com.example.moviewer.Fragments.FavouriteFragment;
 import com.example.moviewer.Models.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener{
-    ImageView detailImage;
-    TextView judulFilm,ratingFilm,releaseDate,viewers, detailSynopsis;
-    FloatingActionButton favorite;
-    FavouriteHelper favouriteHelper;
-    SharedPreferences sharedPreferences;
 
     String title, rating, overview, path, published_date;
+
+    ImageView detailImage;
+    TextView judulFilm,ratingFilm,releaseDate, detailSynopsis;
+    FloatingActionButton favoriteButton;
+    FavouriteHelper favouriteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        //init();
-        //favorite.setOnClickListener(this);
-        title =getIntent().getStringExtra("title");
-        Log.d("titleStringIntent", title);
+        setContentView(R.layout.activity_detail_movie);
+        init();
+        favoriteButton.setOnClickListener(this);
+
     }
 
-    @SuppressLint("ResourceType")
-    private void init(){
-        Intent intent = this.getIntent();
-        favouriteHelper = new FavouriteHelper(this);
+    public void init(){
+        title = getIntent().getStringExtra("title");
+        rating = getIntent().getStringExtra("rating");
+        overview = getIntent().getStringExtra("overview");
+        path = getIntent().getStringExtra("moviePath");
+        published_date = getIntent().getStringExtra("releaseDate");
+
+
         detailImage = findViewById(R.id.imageViewDetailImage);
         judulFilm = findViewById(R.id.tvDetailJudul);
         ratingFilm = findViewById(R.id.tvDetailRating);
         releaseDate = findViewById(R.id.tvDetailReleaseDate);
-        viewers = findViewById(R.id.tvDetailViewers);
         detailSynopsis = findViewById(R.id.tvDetailSinopsis);
-        favorite = findViewById(R.id.buttonfavorite);
+        favoriteButton = findViewById(R.id.buttonfavorite);
 
-        if(intent != null){
-            //movie_id = intent.getLongExtra("position",0);
-//            Cursor cursor = favouriteHelper.getFavouriterData(movie_id);
-//            cursor.moveToFirst();
-//
-//            judulFilm.setText(cursor.getString(1));
-//            detailSynopsis.setText(cursor.getString(2));
-//
-//            ratingFilm.setText(cursor.getString(4));
-//            releaseDate.setText(cursor.getString(5));
-//
-//            cursor.close();
-//            sharedPreferences = getSharedPreferences("LOG_IN",MODE_PRIVATE);
-
-
-
-
-        }
+        judulFilm.setText(title);
+        ratingFilm.setText(rating);
+        releaseDate.setText(published_date);
+        detailSynopsis.setText(overview);
+        Glide.with(this).load(path).into(detailImage);
     }
+
 
     @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.buttonfavorite){
-            insertDataFavorite();
-            Toast.makeText(this,"Success add favorite",Toast.LENGTH_LONG).show();
+    public void onClick(View button) {
+        if (button.getId() == R.id.buttonfavorite){
+           //masih gagal add favorite
+            favouriteHelper.insertFavourite(new Movie(title,overview,path, rating,published_date));
+           Toast.makeText(this,"Success Add Favorite", Toast.LENGTH_SHORT).show();
+           finish();
+
         }
-    }
-
-    private void insertDataFavorite(){
-        String judul = judulFilm.getText().toString();
-        String deskripsi = detailSynopsis.getText().toString();
-        //image ga tau gimana get nya :)
-        String rating = ratingFilm.getText().toString();
-        String tanggalRealease = releaseDate.getText().toString();
-
-        // Movie movie = new Movie(judul,deskripsi,,rating,tanggalRealease);
-        //favouriteHelper.insertFavourite(movie);
     }
 }

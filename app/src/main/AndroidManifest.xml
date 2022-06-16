@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moviewer">
         <activity
-            android:name=".DetailMovieActivity"
+            android:name=".DetailActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"

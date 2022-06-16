@@ -1,6 +1,7 @@
 package com.example.moviewer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import java.util.Vector;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
     Context ctx;
     Vector<Movie> movies;
+    String url;
 
     public MovieAdapter(Context ctx){
         this.ctx = ctx;
@@ -37,12 +39,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MovieAdapter.ViewHolder holder, int position) {
-        String url = movies.get(position).getPath();
-        Log.d("RepeatPic", url);
+        url = movies.get(position).getPath();
         Glide.with(ctx).load(url).into(holder.moviePic);
         holder.title.setText(""+movies.get(position).title);
         holder.rating.setText(""+movies.get(position).rating);
         holder.overview.setText(""+movies.get(position).overview);
+        holder.releaseDate = movies.get(position).releaseDate;
+        holder.moviePath = movies.get(position).path;
     }
 
     @Override
@@ -55,6 +58,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         CardView movieView;
         ImageView moviePic;
         TextView title, rating, overview;
+        String releaseDate, moviePath;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,6 +74,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         @Override
         public void onClick(View view) {
             //pindah ke detail movie
+            Log.d("testClick", "hai");
+            Intent i = new Intent(view.getContext(), DetailMovieActivity.class);
+            i.putExtra("title", title.getText().toString());
+            i.putExtra("rating", rating.getText().toString());
+            i.putExtra("overview", overview.getText().toString());
+            i.putExtra("releaseDate", releaseDate);
+            i.putExtra("moviePath", moviePath);
+
+            view.getContext().startActivity(i);
         }
     }
 }

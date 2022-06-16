@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -26,16 +27,17 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     FloatingActionButton favorite;
     FavouriteHelper favouriteHelper;
     SharedPreferences sharedPreferences;
-    long movie_id;
 
-
+    String title, rating, overview, path, published_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        init();
-        favorite.setOnClickListener(this);
+        //init();
+        //favorite.setOnClickListener(this);
+        title =getIntent().getStringExtra("title");
+        Log.d("titleStringIntent", title);
     }
 
     @SuppressLint("ResourceType")
@@ -51,7 +53,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         favorite = findViewById(R.id.buttonfavorite);
 
         if(intent != null){
-            movie_id = intent.getLongExtra("position",0);
+            //movie_id = intent.getLongExtra("position",0);
 //            Cursor cursor = favouriteHelper.getFavouriterData(movie_id);
 //            cursor.moveToFirst();
 //

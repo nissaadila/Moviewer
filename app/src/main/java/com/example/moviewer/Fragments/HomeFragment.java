@@ -1,5 +1,6 @@
 package com.example.moviewer.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;

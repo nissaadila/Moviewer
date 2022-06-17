@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +22,13 @@ import com.example.moviewer.R;
 import java.util.ArrayList;
 
 
-public class FavouriteFragment extends Fragment {
+public class FavouriteFragment extends Fragment{
 
     TextView error;
     RecyclerView rv;
 
     FavouriteHelper db;
-    ArrayList<String> title, overview, path, rating;
+    ArrayList<String> title, overview, path, rating, releaseDate;
     FavouriteAdapter favouriteAdapter;
 
     public FavouriteFragment() {
@@ -45,10 +46,12 @@ public class FavouriteFragment extends Fragment {
         overview = new ArrayList<>();
         path = new ArrayList<>();
         rating = new ArrayList<>();
+        releaseDate = new ArrayList<>();
 
         StoreDataInArrays();
+        Log.wtf("title", title.get(0));
 
-        favouriteAdapter = new FavouriteAdapter(getContext(), title, overview, path, rating);
+        favouriteAdapter = new FavouriteAdapter(getContext(), title, overview, path, rating, releaseDate);
         rv.setAdapter(favouriteAdapter);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
@@ -64,10 +67,11 @@ public class FavouriteFragment extends Fragment {
         if (cursor.getCount() != 0){
             error.setVisibility(View.GONE);
             while (cursor.moveToNext()){
-                title.add(cursor.getString(0));
-                overview.add(cursor.getString(1));
-                path.add(cursor.getString(2));
-                rating.add(cursor.getString(3));
+                title.add(cursor.getString(1));
+                overview.add(cursor.getString(2));
+                path.add(cursor.getString(3));
+                rating.add(cursor.getString(4));
+                releaseDate.add(cursor.getString(5));
             }
         }
     }

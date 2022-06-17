@@ -46,7 +46,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         overview = getIntent().getStringExtra("overview");
         path = getIntent().getStringExtra("moviePath");
         published_date = getIntent().getStringExtra("releaseDate");
-
+        favouriteHelper = new FavouriteHelper(this);
 
         detailImage = findViewById(R.id.imageViewDetailImage);
         judulFilm = findViewById(R.id.tvDetailJudul);
@@ -66,12 +66,20 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View button) {
         if (button.getId() == R.id.buttonfavorite){
-            Movie movie = new Movie(title,overview,path,rating,published_date);
-            favouriteHelper.insertFavourite(movie);
-            Intent moveFavorite = new Intent(DetailActivity.this,MainActivity.class);
-            startActivity(moveFavorite);
-            Toast.makeText(this,"Success Add Favorite", Toast.LENGTH_SHORT).show();
-            finish();
+
+            Movie validasi = favouriteHelper.authMovie(title);
+            if(validasi == null){
+                Movie movie = new Movie(title,overview,path,rating,published_date);
+                favouriteHelper.insertFavourite(movie);
+                Intent moveFavorite = new Intent(DetailActivity.this,MainActivity.class);
+                startActivity(moveFavorite);
+                Toast.makeText(this,"Success Add Favorite", Toast.LENGTH_SHORT).show();
+                finish();
+            }else {
+                Movie movie = new Movie(title,overview,path,rating,published_date);
+                favouriteHelper.deleteFavourite(movie);
+                Toast.makeText(this, "Deleted from Favorite", Toast.LENGTH_SHORT).show();
+            }
 
         }
     }

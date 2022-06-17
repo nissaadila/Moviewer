@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.moviewer.Models.User;
 import com.example.moviewer.Movie;
@@ -39,9 +40,30 @@ public class FavouriteHelper {
         db.close();
     }
 
+    public Movie authMovie(String title){
+        db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM favourite WHERE title = ?",
+                new String[]{title});
+
+        Movie fav = null;
+        if(cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+            fav = new Movie();
+            fav.setId(cursor.getInt(0));
+            fav.setTitle(cursor.getString(1));
+            fav.setOverview(cursor.getString(2));
+            fav.setPath(cursor.getString(3));
+            fav.setRating(cursor.getString(4));
+            fav.setReleaseDate(cursor.getString(5));
+            cursor.close();
+        }
+        db.close();
+        return fav;
+    }
+
     public void deleteFavourite(Movie favourite){
         db = dbHelper.getWritableDatabase();
-        db.delete(TABLE_NAME, "id = ?", new String[]{favourite.getId() + ""});
+        db.delete(TABLE_NAME, "title = ?", new String[]{favourite.getTitle() + ""});
         db.close();
     }
 

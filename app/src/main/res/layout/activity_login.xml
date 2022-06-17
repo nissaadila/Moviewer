@@ -35,7 +35,8 @@
         android:drawableLeft="@drawable/ic_email"
         android:drawablePadding="5dp"
         android:hint="Email"
-        android:inputType="textWebEmailAddress" />
+        android:inputType="textWebEmailAddress"
+        android:paddingEnd="10dp" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -50,7 +51,8 @@
         android:drawableLeft="@drawable/ic_password"
         android:drawablePadding="5dp"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:paddingEnd="10dp" />
 
     <Button
         android:id="@+id/buttonLogin"

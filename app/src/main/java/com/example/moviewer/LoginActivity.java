@@ -41,11 +41,22 @@ public class LoginActivity extends AppCompatActivity {
         String passwordText = password.getText().toString();
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        if(emailText.isEmpty()){
+            email.setError("email cannot be empty");
+            email.requestFocus();
+            return;
+        }
+
+        if(passwordText.isEmpty()){
+            password.setError("password cannot be empty");
+            password.requestFocus();
+            return;
+        }
 
         User validasiuser = userHelper.auth(emailText,passwordText);
+
         if (validasiuser != null){
             editor.putInt("id", validasiuser.getId());
-//            android.util.Log.wtf("id", String.valueOf(validasiuser.getId()));
             editor.putString("email",emailText);
             editor.putString("password",passwordText);
             editor.putString("username", validasiuser.getUsername());

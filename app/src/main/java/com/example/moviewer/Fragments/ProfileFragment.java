@@ -86,7 +86,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             if(editTextUsername.getText().toString().isEmpty()){
                 Toast.makeText(getContext(), "Username cannot be empty!", Toast.LENGTH_SHORT).show();
-            }else{
+            }
+            else if(editTextUsername.getText().toString().length() > 20){
+                Toast.makeText(getContext(), "Username invalid!", Toast.LENGTH_SHORT).show();
+            }
+            else{
                 new_username = editTextUsername.getText().toString();
                 boolean uniqueCheck = uh.updateUsername(curr_id, new_username);
                 if(!uniqueCheck) {
@@ -109,7 +113,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             if(editTextEmail.getText().toString().isEmpty()){
                 Toast.makeText(getContext(), "Email cannot be empty!", Toast.LENGTH_SHORT).show();
-            }else{
+            }
+            else if(!editTextEmail.getText().toString().endsWith(".com")){
+                Toast.makeText(getContext(), "Email invalid!", Toast.LENGTH_SHORT).show();
+            }
+            else{
                 //check email udah ada belom
                 new_email = editTextEmail.getText().toString();
                 User validateEmail = uh.checkEmail(new_email);

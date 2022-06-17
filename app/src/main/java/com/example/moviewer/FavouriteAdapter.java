@@ -21,10 +21,14 @@ import java.util.Vector;
 
 public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyViewHolder>{
     private Context ctx;
-    private ArrayList ALtitle, ALoverview, ALpath, ALrating, AlreleaseDate;
+    private Vector ALtitle, ALoverview, ALpath, ALrating, AlreleaseDate;
 
-    public FavouriteAdapter(Context ctx, ArrayList title, ArrayList overview, ArrayList path, ArrayList rating, ArrayList releaseDate){
+
+    public FavouriteAdapter(Context ctx){
         this.ctx = ctx;
+    }
+
+    public void setMovies( Vector title, Vector overview, Vector path, Vector rating, Vector releaseDate) {
         ALtitle = title;
         ALoverview = overview;
         ALpath = path;
@@ -75,15 +79,15 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyVi
 
         @Override
         public void onClick(View view) {
-//            Log.d("testClick", "hai");
-//            Intent i = new Intent(view.getContext(), DetailActivity.class);
-//            i.putExtra("title", title.getText().toString());
-//            i.putExtra("rating", rating.getText().toString());
-//            i.putExtra("overview", overview.getText().toString());
-//            i.putExtra("releaseDate", releaseDate);
-//            i.putExtra("moviePath", path);
-//
-//            view.getContext().startActivity(i);
+            Log.d("testClick", "hai");
+            Intent i = new Intent(view.getContext(), DetailActivity.class);
+            i.putExtra("title", title.getText().toString());
+            i.putExtra("rating", rating.getText().toString());
+            i.putExtra("overview", overview.getText().toString());
+            i.putExtra("releaseDate", releaseDate);
+            i.putExtra("moviePath", path);
+
+            view.getContext().startActivity(i);
         }
     }
 

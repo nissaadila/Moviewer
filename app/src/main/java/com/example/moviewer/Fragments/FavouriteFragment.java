@@ -20,6 +20,7 @@ import com.example.moviewer.FavouriteAdapter;
 import com.example.moviewer.R;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class FavouriteFragment extends Fragment{
@@ -28,7 +29,7 @@ public class FavouriteFragment extends Fragment{
     RecyclerView rv;
 
     FavouriteHelper db;
-    ArrayList<String> title, overview, path, rating, releaseDate;
+    Vector<String> title, overview, path, rating, releaseDate;
     FavouriteAdapter favouriteAdapter;
 
     public FavouriteFragment() {
@@ -42,18 +43,21 @@ public class FavouriteFragment extends Fragment{
         error = view.findViewById(R.id.errorMessageFavourite);
 
         db = new FavouriteHelper(getContext());
-        title = new ArrayList<>();
-        overview = new ArrayList<>();
-        path = new ArrayList<>();
-        rating = new ArrayList<>();
-        releaseDate = new ArrayList<>();
+        title = new Vector<>();
+        overview = new Vector<>();
+        path = new Vector<>();
+        rating = new Vector<>();
+        releaseDate = new Vector<>();
 
         StoreDataInArrays();
         Log.wtf("title", title.get(0));
 
-        favouriteAdapter = new FavouriteAdapter(getContext(), title, overview, path, rating, releaseDate);
+        favouriteAdapter = new FavouriteAdapter(getContext());
+        favouriteAdapter.setMovies(title, overview, path, rating, releaseDate);
         rv.setAdapter(favouriteAdapter);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        favouriteAdapter.notifyDataSetChanged();
         return view;
     }
 

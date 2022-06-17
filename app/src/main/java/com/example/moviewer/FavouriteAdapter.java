@@ -75,15 +75,15 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyVi
 
         @Override
         public void onClick(View view) {
-            Log.d("testClick", "hai");
-            Intent i = new Intent(view.getContext(), DetailActivity.class);
-            i.putExtra("title", title.getText().toString());
-            i.putExtra("rating", rating.getText().toString());
-            i.putExtra("overview", overview.getText().toString());
-            i.putExtra("releaseDate", releaseDate);
-            i.putExtra("moviePath", path);
-
-            view.getContext().startActivity(i);
+//            Log.d("testClick", "hai");
+//            Intent i = new Intent(view.getContext(), DetailActivity.class);
+//            i.putExtra("title", title.getText().toString());
+//            i.putExtra("rating", rating.getText().toString());
+//            i.putExtra("overview", overview.getText().toString());
+//            i.putExtra("releaseDate", releaseDate);
+//            i.putExtra("moviePath", path);
+//
+//            view.getContext().startActivity(i);
         }
     }
 

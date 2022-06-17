@@ -58,11 +58,13 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         favoriteButton = findViewById(R.id.buttonfavorite);
         favouriteHelper = new FavouriteHelper(this);
 
+
         judulFilm.setText(title);
         ratingFilm.setText(rating);
         releaseDate.setText(published_date);
         detailSynopsis.setText(overview);
         Glide.with(this).load(path).into(detailImage);
+
     }
 
 

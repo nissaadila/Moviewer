@@ -54,6 +54,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         releaseDate = findViewById(R.id.tvDetailReleaseDate);
         detailSynopsis = findViewById(R.id.tvDetailSinopsis);
         favoriteButton = findViewById(R.id.buttonfavorite);
+        favouriteHelper = new FavouriteHelper(this);
 
         judulFilm.setText(title);
         ratingFilm.setText(rating);

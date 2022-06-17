@@ -46,6 +46,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         holder.overview.setText(""+movies.get(position).overview);
         holder.releaseDate = movies.get(position).releaseDate;
         holder.moviePath = movies.get(position).path;
+        holder.curr_id = movies.get(position).id;
     }
 
     @Override
@@ -59,6 +60,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         ImageView moviePic;
         TextView title, rating, overview;
         String releaseDate, moviePath;
+        int curr_id;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,6 +83,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
             i.putExtra("overview", overview.getText().toString());
             i.putExtra("releaseDate", releaseDate);
             i.putExtra("moviePath", moviePath);
+            i.putExtra("userID", curr_id);
 
             view.getContext().startActivity(i);
         }

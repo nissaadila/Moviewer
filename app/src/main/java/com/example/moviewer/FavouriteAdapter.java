@@ -21,42 +21,39 @@ import java.util.Vector;
 
 public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyViewHolder>{
     private Context ctx;
-    private Vector ALtitle, ALoverview, ALpath, ALrating, AlreleaseDate;
-
+    private Vector<Movie> movies;
+    String url;
 
     public FavouriteAdapter(Context ctx){
         this.ctx = ctx;
     }
 
-    public void setMovies( Vector title, Vector overview, Vector path, Vector rating, Vector releaseDate) {
-        ALtitle = title;
-        ALoverview = overview;
-        ALpath = path;
-        ALrating = rating;
-        AlreleaseDate = releaseDate;
+    public void setMovies(Vector<Movie> movies) {
+        this.movies = movies;
     }
 
     @NonNull
     @Override
     public FavouriteAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(ctx).inflate(R.layout.movie_item, parent, false);
+        View view = LayoutInflater.from(ctx).inflate(R.layout.movie_favorite, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FavouriteAdapter.MyViewHolder holder, int position) {
-        String url = String.valueOf(ALpath.get(position));
+        url = movies.get(position).getPath();
         Glide.with(ctx).load(url).into(holder.moviePic);
-        holder.title.setText(String.valueOf(ALtitle.get(position)));
-        holder.rating.setText(String.valueOf(ALrating.get(position)));
-        holder.overview.setText(String.valueOf(ALoverview.get(position)));
-        holder.releaseDate = String.valueOf(AlreleaseDate.get(position));
-        holder.path = String.valueOf(ALpath.get(position));
+        holder.title.setText(""+movies.get(position).title);
+        holder.rating.setText(""+movies.get(position).rating);
+        holder.overview.setText(""+movies.get(position).overview);
+        holder.releaseDate = movies.get(position).releaseDate;
+        holder.moviePath = movies.get(position).path;
+        holder.curr_id = movies.get(position).id;
     }
 
     @Override
     public int getItemCount() {
-        return ALoverview.size();
+        return movies.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -64,7 +61,8 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyVi
         CardView movieFavourite;
         ImageView moviePic;
         TextView title, rating, overview;
-        String path, releaseDate;
+        String releaseDate, moviePath;
+        int curr_id;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,7 +72,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyVi
             title = itemView.findViewById(R.id.movieName);
             rating = itemView.findViewById(R.id.movieRating);
             overview = itemView.findViewById(R.id.overview);
-//            movieFavourite.setOnClickListener(this);
+            movieFavourite.setOnClickListener(this);
         }
 
         @Override
@@ -85,7 +83,8 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyVi
             i.putExtra("rating", rating.getText().toString());
             i.putExtra("overview", overview.getText().toString());
             i.putExtra("releaseDate", releaseDate);
-            i.putExtra("moviePath", path);
+            i.putExtra("moviePath", moviePath);
+            i.putExtra("userID", curr_id);
 
             view.getContext().startActivity(i);
         }

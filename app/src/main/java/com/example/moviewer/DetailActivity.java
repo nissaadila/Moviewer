@@ -30,6 +30,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     TextView judulFilm,ratingFilm,releaseDate, detailSynopsis;
     FloatingActionButton favoriteButton;
     FavouriteHelper favouriteHelper;
+    int curr_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         overview = getIntent().getStringExtra("overview");
         path = getIntent().getStringExtra("moviePath");
         published_date = getIntent().getStringExtra("releaseDate");
+        curr_id = getIntent().getIntExtra("userID", 0);
         favouriteHelper = new FavouriteHelper(this);
 
         detailImage = findViewById(R.id.imageViewDetailImage);
@@ -68,18 +70,21 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View button) {
         if (button.getId() == R.id.buttonfavorite){
 
-            Movie validasi = favouriteHelper.authMovie(title);
+            Movie validasi = favouriteHelper.authMovie(title, curr_id);
             if(validasi == null){
-                Movie movie = new Movie(title,overview,path,rating,published_date);
+                Movie movie = new Movie(curr_id, title,overview,path,rating,published_date);
                 favouriteHelper.insertFavourite(movie);
                 Intent moveFavorite = new Intent(DetailActivity.this,MainActivity.class);
                 startActivity(moveFavorite);
                 Toast.makeText(this,"Success Add Favorite", Toast.LENGTH_SHORT).show();
                 finish();
             }else {
-                Movie movie = new Movie(title,overview,path,rating,published_date);
+                Movie movie = new Movie(curr_id, title,overview,path,rating,published_date);
                 favouriteHelper.deleteFavourite(movie);
+                Intent moveFavorite = new Intent(DetailActivity.this,MainActivity.class);
+                startActivity(moveFavorite);
                 Toast.makeText(this, "Deleted from Favorite", Toast.LENGTH_SHORT).show();
+                finish();
             }
 
         }

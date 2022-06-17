@@ -12,7 +12,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                                                 "password text NOT NULL," +
                                                 "email text NOT NULL)";
 
-    private final String CREATE_TABLE_FAVOURITE = "CREATE TABLE favourite(id integer PRIMARY KEY AUTOINCREMENT," +
+    private final String CREATE_TABLE_FAVOURITE = "CREATE TABLE favourite(id integer NOT NULL," +
                                                     "title text NOT NULL," +
                                                     "overview text NOT NULL," +
                                                     "path text NOT NULL," +

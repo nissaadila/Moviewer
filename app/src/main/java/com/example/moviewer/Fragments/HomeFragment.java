@@ -34,12 +34,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     TextView searchBar, errorMsg;
     Button searchBtn;
     String keyword;
+    int curr_id;
 
     String title, rating, overview, path, published_date;
     RecyclerView mrv;
 
     Vector<Movie> movies = new Vector<>();
     MovieAdapter movieAdapt;
+
+    public HomeFragment (int user_id_logged) {
+        this.curr_id = user_id_logged;
+        Log.wtf("currid", "id: " + curr_id);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,7 +104,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                             path = "https://image.tmdb.org/t/p/w500" + object.getString("poster_path");
                             published_date = object.getString("release_date");
 
-                            Movie movie = new Movie(title, overview, path, rating, published_date);
+                            Movie movie = new Movie(curr_id, title, overview, path, rating, published_date);
                             movies.add(movie);
                         }
                         movieAdapt.notifyDataSetChanged();

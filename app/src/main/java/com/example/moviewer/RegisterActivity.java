@@ -43,6 +43,36 @@ public class RegisterActivity extends AppCompatActivity {
         String passwordText = password.getText().toString();
         String emailText = email.getText().toString();
 
+        if(usernameText.isEmpty()){
+            username.setError("username cannot be empty");
+            username.requestFocus();
+            return;
+        }
+
+        if(usernameText.length() > 20){
+            username.setError("username invalid");
+            username.requestFocus();
+            return;
+        }
+
+        if(emailText.isEmpty()){
+            email.setError("email cannot be empty");
+            email.requestFocus();
+            return;
+        }
+
+        if(!emailText.endsWith(".com")){
+            email.setError("email invalid");
+            email.requestFocus();
+            return;
+        }
+
+        if(passwordText.isEmpty()){
+            password.setError("password cannot be empty");
+            password.requestFocus();
+            return;
+        }
+
         Cursor cursor = userHelper.getUserData();
 
         if(cursor != null){

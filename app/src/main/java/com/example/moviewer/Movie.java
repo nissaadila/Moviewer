@@ -8,12 +8,13 @@ public class Movie {
     String rating;
     String releaseDate;
 
-    public Movie(String title, String overview, String path, String rating, String releaseDate) {
+    public Movie(int id, String title, String overview, String path, String rating, String releaseDate) {
         this.title = title;
         this.overview = overview;
         this.path = path;
         this.rating = rating;
         this.releaseDate = releaseDate;
+        this.id = id;
     }
 
     public Movie(){}

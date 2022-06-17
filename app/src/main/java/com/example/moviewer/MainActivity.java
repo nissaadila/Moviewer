@@ -44,16 +44,16 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         SharedPreferences sPref = getSharedPreferences("LOG_IN", MODE_PRIVATE);
         user_id_logged = sPref.getInt("id", -1);
         android.util.Log.wtf("id", String.valueOf(user_id_logged));
-        switchFragment(new HomeFragment());
+        switchFragment(new HomeFragment(user_id_logged));
         bottomNav = findViewById(R.id.bottomNav);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.nav_home) {
-            switchFragment(new HomeFragment());
+            switchFragment(new HomeFragment(user_id_logged));
         } else if(item.getItemId() == R.id.nav_favourite) {
-            switchFragment(new FavouriteFragment());
+            switchFragment(new FavouriteFragment(user_id_logged));
         } else if(item.getItemId() == R.id.nav_profile){
             android.util.Log.wtf("id", String.valueOf(user_id_logged));
             switchFragment(new ProfileFragment(user_id_logged));

@@ -34,7 +34,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_movie);
+        setContentView(R.layout.activity_detail);
         init();
         favoriteButton.setOnClickListener(this);
 
@@ -54,6 +54,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         releaseDate = findViewById(R.id.tvDetailReleaseDate);
         detailSynopsis = findViewById(R.id.tvDetailSinopsis);
         favoriteButton = findViewById(R.id.buttonfavorite);
+        favouriteHelper = new FavouriteHelper(this);
 
         judulFilm.setText(title);
         ratingFilm.setText(rating);

@@ -66,10 +66,12 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View button) {
         if (button.getId() == R.id.buttonfavorite){
-           //masih gagal add favorite
-            favouriteHelper.insertFavourite(new Movie(title,overview,path, rating,published_date));
-           Toast.makeText(this,"Success Add Favorite", Toast.LENGTH_SHORT).show();
-           finish();
+            Movie movie = new Movie(title,overview,path,rating,published_date);
+            favouriteHelper.insertFavourite(movie);
+            Intent moveFavorite = new Intent(DetailActivity.this,MainActivity.class);
+            startActivity(moveFavorite);
+            Toast.makeText(this,"Success Add Favorite", Toast.LENGTH_SHORT).show();
+            finish();
 
         }
     }

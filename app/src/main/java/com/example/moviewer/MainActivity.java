@@ -20,6 +20,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
+    // Kelompok 7
+    // Nissa Adila Hakim - 2440113055
+    // Priskilla Adriani Seciawanto - 2440110356
+    // Maevy Marvella - 2440094402
+    
+    
+    
     private BottomNavigationView bottomNav;
     int user_id_logged;
 
